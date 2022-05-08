@@ -1,0 +1,25 @@
+import express from 'express' //crea o inicaliza una web site
+import morgan from 'morgan'//recibe peticiones html
+import cors from 'cors'
+import fileUpload from 'express-fileupload'
+
+import indexRoutes from './routes/index.routes.js'
+import productsRoutes from './routes/products.routes.js'
+
+const app = express() //Inicializa la pagina web
+
+app.use(cors()) //Hacemos que la peticion de otros servidores sean aceptadas, esto se puede configurar desde un solo servidor pero lo usaremos para que todos puedan usarlo
+app.use(morgan('dev')) //Inicaliza el recibimiento de las peticiones
+app.use(express.json()) //Para recibir los objectos json
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : './uploads/'
+}));
+
+
+
+
+app.use(indexRoutes)
+app.use(productsRoutes)
+
+export default app //esto funciona para exportarlos a diferentes archivos
